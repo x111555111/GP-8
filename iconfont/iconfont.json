@@ -1,0 +1,37 @@
+{
+  "id": "",
+  "name": "",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "29300651",
+      "name": "pause",
+      "font_class": "pause",
+      "unicode": "e60f",
+      "unicode_decimal": 58895
+    },
+    {
+      "icon_id": "29300656",
+      "name": "play",
+      "font_class": "play",
+      "unicode": "e610",
+      "unicode_decimal": 58896
+    },
+    {
+      "icon_id": "29300664",
+      "name": "sound-on",
+      "font_class": "sound-on",
+      "unicode": "e612",
+      "unicode_decimal": 58898
+    },
+    {
+      "icon_id": "29300667",
+      "name": "sound-off",
+      "font_class": "sound-off",
+      "unicode": "e613",
+      "unicode_decimal": 58899
+    }
+  ]
+}

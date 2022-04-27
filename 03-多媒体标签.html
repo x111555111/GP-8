@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Leon</title>
+  <script src="./jquery.js"></script>
+</head>
+
+<body>
+  <!-- 视频多媒体 --> 
+  <!-- <video src="./trailer.mp4" controls autoplay width="300" height="300"></video> -->
+  <!-- <video src="https://media.w3.org/2010/05/sintel/trailer.mp4" controls autoplay width="300" height="300"></video> -->
+  <audio src="./陈奕迅-孤勇者.mp3" controls autoplay></audio>
+
+  <button>播放</button>
+</body>
+
+</html>
+<script>
+  // 点击播放
+  $('button').click(function () {
+    if ($(this).text() === '播放') {
+      $('audio')[0].play();
+      $(this).text('暂停')
+    } else {
+      $('audio')[0].pause();
+      $(this).text('播放')
+    }
+  })
+  // 事件
+  // 开始加载
+  // $('video')[0].addEventListener('loadstart', f1);
+  // function f1() {
+  //   console.log('开始加载了');
+  // }
+  // 加载中
+  // $('video')[0].addEventListener('progress', f2);
+  // function f2() {
+  //   console.log('加载中');
+  // }
+  // 加载完毕
+  // $('video')[0].addEventListener('canplay', f2);
+  // function f2() {
+  //   console.log('加载完毕');
+  //   // 视频总时长
+  //   console.log( $('video')[0].duration );
+  // }
+  
+
+  // 播放结束的时候
+  // 控件消失
+  $('audio')[0].onended = function(){
+    $(this).remove();
+    $('button').text('播放结束')
+  }
+  // 改变音量事件
+  $('audio')[0].onvolumechange = function(){
+    console.log(this.volume);
+  }
+  // 点击页面设置静音
+  // $(document).click(()=>{
+  //   $('audio')[0].muted = false;
+  // })
+  // 播放事件
+  $('audio')[0].ontimeupdate = function(){
+    console.log(this.currentTime);
+    // 播放10秒就暂停
+    if(this.currentTime>=10){
+      this.pause()
+    }
+
+  }
+</script>

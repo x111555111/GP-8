@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Leon</title>
+</head>
+<body>
+  <form action="">
+    <fieldset style="width: 300px;" disabled>
+      <legend>登录</legend>
+      名字: <input type="text" > <br>
+      密码: <input type="password"> <br>
+      <input type="submit" value="登录">
+    </fieldset>
+  </form>
+  <form action="http://baidu.com" method="GET">
+    邮箱: <input type="email" name="email" placeholder="请输入邮箱" autocomplete="on"> <br>
+    数字: <input type="number" name="num" max="10" step="2" value="1"> <br>
+    电话: <input type="tel" name="tel" required> <br>
+    搜索: <input type="search" name="sear" pattern="^\d+$"> <br>
+    网址: <input type="url" name="url"> <br>
+    日期: <input type="date" name="date"><br>
+    月份: <input type="month" name="mon"><br>
+    几周: <input type="week" name="week"><br>
+    进度: <input type="range" max="100" min="1" value="50" name="n"><br>
+    颜色: <input type="color" name="c"><br>
+    文件: <input type="file" multiple><br>
+    请输入水果网址: <input type="text" list="list" name="abc">
+    <datalist id="list">
+      <option value="www.pingguo.com">苹果网址</option>
+      <option value="www.xiangjiao.com">香蕉</option>
+      <option value='www.xigua.com'>西瓜</option>
+    </datalist> <br>
+    <input type="submit">    
+  </form>
+</body>
+</html>

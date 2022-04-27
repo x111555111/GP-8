@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Leon</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+
+    header {
+      width: 100%;
+      height: 100px;
+      background-color: yellowgreen;
+    }
+
+    nav {
+      width: 1200px;
+      height: 40px;
+      margin: 10px auto;
+      background-color: pink;
+    }
+
+    section {
+      width: 1200px;
+      height: 700px;
+      margin: 0 auto;
+    }
+
+    article {
+      width: 80%;
+      height: 700px;
+      background-color: hotpink;
+      float: left;
+    }
+
+    aside {
+      width: 20%;
+      height: 700px;
+      background-color: deeppink;
+      float: right;
+    }
+
+    footer {
+      width: 100%;
+      height: 50px;
+      background-color: greenyellow;
+    }
+  </style>
+</head>
+
+<body>
+  <!-- h5中的这个些语义化标签都是块级元素 -->
+  <!-- 头部标签 -->
+  <header>头部</header>
+  <!-- 导航 -->
+  <nav>导航</nav>
+  <!-- 块级内容 -->
+  <section>
+    <!-- 文章内容 -->
+    <article>文章
+      <input type="number" oninput="n3.value=parseInt(n1.value)+parseInt(n2.value)" id="n1">+ 0<input id="n2" type="range" max="100" min="0" value="0">100=
+      <output id="n3"></output>
+    </article>
+    <!-- 侧边内容 -->
+    <aside>侧边</aside>
+  </section>
+  <!-- 底部内容 -->
+  <footer>底部</footer>
+</body>
+
+</html>
+<script>
+  // h5 是html5的简称,就是html的第五版
+  //  h5新增了一些标签和接口(提供给js使用的),css3
+  //  h5主要是为了移动手机端的优化,用户体验更好----pc端对h5不友好
+  // console.log(n1);
+</script>

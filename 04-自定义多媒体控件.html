@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Leon</title>
+  <link rel="stylesheet" href="./iconfont/iconfont.css">
+  <style>
+    .media {
+      width: 800px;
+      height: 50px;
+      border: 3px solid #bbb;
+      margin: 300px auto;
+    }
+
+    .media>div {
+      float: left;
+      line-height: 50px;
+      margin: 0 10px;
+    }
+
+    .media>div.playRange {
+      width: 200px;
+      height: 6px;
+      background-color: #333;
+      margin: 22px 10px;
+      border-radius: 3px;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .media>div.playRange .currentRange {
+      /* width: 100px; */
+      width: 0px;
+      height: 6px;
+      background-color: rgb(9, 143, 153);
+      position: absolute;
+      left: 0;
+      top: 0;
+      /* pointer-events: none; */
+    }
+
+    .media>div.playRange .playBtn {
+      width: 20px;
+      height: 20px;
+      background-color: rgb(9, 143, 153);
+      border-radius: 50%;
+      position: absolute;
+      /* left: 90px; */
+      left: 0px;
+      top: -7px;
+      /* 设置元素的鼠标事件穿透 */
+      pointer-events: none;
+    }
+
+    .media .volume {
+      position: relative;
+    }
+
+    .media .volumeRange {
+      width: 4px;
+      height: 100px;
+      background-color: #333;
+      border-radius: 2px;
+      position: absolute;
+      top: -100px;
+      left: 10px;
+      display: none;
+      cursor: pointer;
+    }
+
+    .media .volumeRange .currentVolume {
+      width: 4px;
+      height: 50px;
+      background-color: blue;
+      border-radius: 2px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      pointer-events:none;
+    }
+
+    .media .volumeRange .volumeBtn {
+      width: 15px;
+      height: 15px;
+      border-radius: 50%;
+      background-color: blue;
+      position: absolute;
+      left: -5px;
+      bottom: 40px;
+      pointer-events: none;
+    }
+
+    .media i {
+      font-size: 24px;
+    }
+  </style>
+</head>
+
+<body>
+  <!--  -->
+  <audio src="./陈奕迅-孤勇者.mp3"></audio>
+  <!-- 多媒体空间 -->
+  <div class="media">
+    <!-- 播放暂停按钮 -->
+    <div class="playOrPause">
+      <i class="iconfont icon-play"></i>
+    </div>
+    <!-- 播放事件 -->
+    <div class="time">
+      <span class="currentMinute">00</span>
+      :
+      <span class="currentSecond">00</span>
+      /
+      <span class="durationMinute">00</span>
+      :
+      <span class="durationSecond">00</span>
+    </div>
+    <!-- 播放进度条 -->
+    <div class="playRange">
+      <div class="currentRange"></div>
+      <div class="playBtn"></div>
+    </div>
+    <!-- 声音控件 -->
+    <div class="volume">
+      <!-- 声音大小控制 -->
+      <div class="volumeRange">
+        <div class="currentVolume"></div>
+        <div class="volumeBtn"></div>
+      </div>
+      <!-- 声音按钮 -->
+      <i class="iconfont icon-sound-on"></i>
+    </div>
+  </div>
+</body>
+
+</html>
+<script src="./jquery.js"></script>
+<script>
+  // 多媒体标签
+  let media = $('audio')[0];
+  // 鼠标移入移除控制 声音空间的显示
+  $('.volume').hover(function () {
+    $(this).find('.volumeRange').show();
+  }, function () {
+    $(this).find('.volumeRange').hide();
+  });
+  // 点击播放暂停按钮
+  $('.playOrPause').click(function () {
+    if ($(this).find('i').hasClass('icon-play')) {
+      media.play();
+      $(this).find('i').removeClass('icon-play').addClass('icon-pause');
+    } else {
+      media.pause();
+      $(this).find('i').removeClass('icon-pause').addClass('icon-play');
+    }
+  });
+  // 获取并渲染总时长
+  media.oncanplay = function () {
+    let durMin = parseInt(this.duration / 60);
+    let dursec = parseInt(this.duration % 60);
+    $('.durationMinute').text(durMin < 10 ? '0' + durMin : durMin);
+    $('.durationSecond').text(dursec < 10 ? '0' + dursec : dursec);
+  }
+  // 播放时间设置
+  media.ontimeupdate = function () {
+    // 当前的播放时间
+    let durMin = parseInt(this.currentTime / 60);
+    let dursec = parseInt(this.currentTime % 60);
+    $('.currentMinute').text(durMin < 10 ? '0' + durMin : durMin);
+    $('.currentSecond').text(dursec < 10 ? '0' + dursec : dursec);
+  }
+  // 拖拽播放进度条
+  $('.playRange').mousedown(function (e) {
+    // 获取鼠标按下相对于playRange左侧的距离
+    let x = e.offsetX;
+     document.onselectstart=function(){return false}   //阻止浏览器下的默认事件
+    
+    $('.currentRange').css('width', x);
+    $('.playBtn').css('left', x - $('.playBtn').width() / 2);
+    // 播放
+    media.play();
+    $('.playOrPause i').removeClass('icon-play').addClass('icon-pause');
+    // 修改时间
+    // x/$('.playRange').width() === 当前时间/总时间
+    let percent = x / $(this).width();
+    let currTime = parseInt(media.duration * percent);
+    // 将当前播放的时间设置给多媒体标签
+    media.currentTime = currTime;
+    $('.playRange')[0].onmousemove = function (e) {
+      let x = e.offsetX;
+      $('.currentRange').css('width', x);
+      $('.playBtn').css('left', x - $('.playBtn').width() / 2);
+      let percent = x / $(this).width();
+
+      let currTime = parseInt(media.duration * percent);
+      media.currentTime = currTime;
+
+    }
+  })
+  $(document).mouseup(function () {
+    $('.playRange')[0].onmousemove = null;
+  })
+
+  // 点击静音
+  $('.volume i').click(function(){
+    if ($(this).hasClass('icon-sound-on')) {
+      // 静音
+      media.muted = true;
+      $(this).removeClass('icon-sound-on').addClass('icon-sound-off');
+      $('.currentVolume').css('height',0);
+      $('.volumeBtn').css('bottom',-7);
+    } else {
+      media.muted = false;
+      $(this).removeClass('icon-sound-off').addClass('icon-sound-on');
+      $('.currentVolume').css('height',50);
+      $('.volumeBtn').css('bottom',43);
+      media.volume = 0.5;      
+    }
+  })
+
+  // 点击音量控制
+  $('.volumeRange').mousedown(function(e){
+    let y = e.offsetY;
+    
+    media.volume=(100-y)/100
+    document.onselectstart=function(){return false}   //阻止浏览器下的默认事件
+    $('.currentVolume').css('height', 100-y);
+    $('.volumeBtn').css('top', y - $('.volumeBtn').width() /2);
+    
+   
+    $('.volumeRange')[0].onmousemove = function (e) {
+      let y = e.offsetY;
+      $('.currentVolume').css('height', 100-y);
+    $('.volumeBtn').css('top', y - $('.volumeBtn').width() /2);
+    
+    media.volume=(100-y)/100
+    }
+    
+  })
+  $(document).mouseup(function () {
+    $('.volumeRange')[0].onmousemove = null;
+  })
+</script>
